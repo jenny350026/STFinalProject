@@ -25,3 +25,6 @@ local.properties
 
 # Locally stored "Eclipse launch configurations"
 *.launch
+
+# Do NOT ignore any library files
+!lib/*
