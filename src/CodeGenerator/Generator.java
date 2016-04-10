@@ -1,5 +1,6 @@
 package CodeGenerator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -116,12 +117,10 @@ public class Generator {
 		this.toClickAtSetUp = toClickAtSetUp;
 		components = new ArrayList<WebComponent>();
 		
+		File file = new File("src/GeneratedTest/DeltaTester.java");
 		try {
-			writer = new PrintWriter("src/GeneratedTest/DeltaTester.java", "UTF-8");
+			writer = new PrintWriter(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

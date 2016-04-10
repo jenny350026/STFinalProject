@@ -26,5 +26,8 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
+# Generated File
+src/GeneratedTest/*
+
 # Do NOT ignore any library files
 !lib/*
