@@ -15,8 +15,8 @@ public class TextBox extends WebComponent{
 	public ArrayList<String> testAction() {
 		// TODO Auto-generated method stub
 		ArrayList<String> strings = new ArrayList<String>();
-		strings.add("WebElement element" + id + " = driver.findElement(By.xpath(\"" + xpath + "\"));\n");
-		strings.add("element" + id + ".sendKeys(\"00000\");\n");
+		strings.add("WebElement element" + id + " = driver.findElement(By.xpath(\"" + xpath + "\"));");
+		strings.add("element" + id + ".sendKeys(\"00000\");");
 		return strings;
 	}
 }
