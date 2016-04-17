@@ -28,15 +28,38 @@ public class FinalProject {
 
 	// source :　https://groups.google.com/forum/#!topic/selenium-users/kvGLSzl_GQE
 	public static String getXPath(WebElement element) { 
-        String jscript = "function getPathTo(node) {" + 
-            "  var stack = [];" + 
-            "  while(node.parentNode !== null) {" + 
-            "    stack.unshift(node.tagName);" + 
-            "    node = node.parentNode;" + 
-            "  }" + 
-            "  return stack.join('/');" + 
-            "}" + 
-            "return getPathTo(arguments[0]);"; 
+//        String jscript = "function getPathTo(node) {" + 
+//            "  var stack = [];" + 
+//            "  while(node.parentNode !== null) {" + 
+//            "    stack.unshift(node.tagName);" + 
+//            "    node = node.parentNode;" + 
+//            "  }" + 
+//            "  return stack.join('/');" + 
+//            "}" + 
+//            "return getPathTo(arguments[0]);"; 
+       
+        String jscript = "function getElementXPath(elt){" +
+                "var path = \"\";" +
+                "for (; elt && elt.nodeType == 1; elt = elt.parentNode){" +
+                    "idx = getElementIdx(elt);" +
+                    "xname = elt.tagName;" +
+                    "if (idx > 0){" +
+                        "xname += \"[\" + idx + \"]\";" +
+                    "}" +
+                    "path = \"/\" + xname + path;" +
+                "}" + 
+                "return path;" +
+            "}" +
+            "function getElementIdx(elt){" +
+                "var count = 1;" +
+                "for (var sib = elt.previousSibling; sib ; sib = sib.previousSibling){" +
+                    "if(sib.nodeType == 1 && sib.tagName == elt.tagName){" +
+                        "count++;" +
+                    "}" +
+                "}" +
+                "return count;" + 
+            "}" +
+            "return getElementXPath(arguments[0]).toLowerCase();";  
         return (String) ((RemoteWebDriver) driver).executeScript(jscript, element); 
     }
 	
@@ -53,26 +76,70 @@ public class FinalProject {
 		driver.get("http://www.delta.com/");
 
 		try {
-			Thread.sleep(3000); // wait
+			Thread.sleep(1000); // wait
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
 
 		WebElement myTrips = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a"));
 		myTrips.click();
+		
 		WebElement cardNumber = driver.findElement(
 				By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/div/div/div[1]/div/form[1]/div/select"));
 		Select dropdown = new Select(cardNumber);
 		dropdown.selectByIndex(0);
-
-		List<WebElement> box = driver.findElements(By.xpath("//form[@id='widgetSearchUsingConfirmationNo']/input[@type='text']"));
-		for(int i = 0; i < box.size(); ++i){
-			System.out.println(getXPath(box.get(i)));
-			//TODO getXPath doesn't seem to be working now
-			g.addTextBox(box.get(i), getXPath(box.get(i)));
-		}
-		//g.addTextBox(box);
 		
+		//dropdowns(newly added)
+		List<WebElement> dropdowns = driver.findElements(By.xpath("//form[@class='customFormUI find-mytrips-select']//select"));
+		for(int i = 0; i < dropdowns.size(); ++i){
+			System.out.println(getXPath(dropdowns.get(i)));
+			g.addDropdown(dropdowns.get(i), getXPath(dropdowns.get(i)));
+		}
+			
+		//boxes
+		List<WebElement> boxes = driver.findElements(By.xpath("//form[@id='widgetSearchUsingConfirmationNo']//input[@type='text']"));
+		for(int i = 0; i < boxes.size(); ++i){
+			System.out.println(getXPath(boxes.get(i)));
+			//TODO getXPath doesn't seem to be working now
+			//it has been fixed now
+			g.addTextBox(boxes.get(i), getXPath(boxes.get(i)));
+		}
+		
+		//buttons(newly added)
+		List<WebElement> buttons = driver.findElements(By.xpath("//form[@id='widgetSearchUsingConfirmationNo']//button[@type='submit']"));
+		for(int i = 0; i < buttons.size(); ++i){
+			System.out.println(getXPath(buttons.get(i)));
+			g.addButtons(buttons.get(i), getXPath(buttons.get(i)));
+		}
+		
+		try {
+			Thread.sleep(1000); // wait
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		
+		WebElement bookATrip = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[2]/a"));
+		bookATrip.click();
+		try {
+			Thread.sleep(1000); // wait
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		WebElement hotel = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[2]/div/div/div/div[1]/ul/li[2]/a"));
+		hotel.click();
+		WebElement flight = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[2]/div/div/div/div[1]/ul/li[1]/a"));
+		flight.click();
+		
+		//radio buttons(newly added)
+		List<WebElement> rButtons = driver.findElements(By.id("oneWayRadioBtn"));
+		for(int i = 0; i < rButtons.size(); ++i){
+			System.out.println(getXPath(rButtons.get(i)));
+			g.addRadioButtons(rButtons.get(i), getXPath(rButtons.get(i)));
+		}
+//		System.out.println(rb.size());
+//		System.out.println(rb.get(0).isEnabled());
+//		rb.get(0).click();
+
 		g.generate();
 /*
 				// System.out.println(box.size());

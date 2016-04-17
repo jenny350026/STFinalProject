@@ -130,6 +130,18 @@ public class Generator {
 		components.add(new TextBox(e, xpath, components.size()));
 	}
 	
+	//newly added
+	public void addDropdown(WebElement e, String xpath){
+		//components.add(new TextBox(e, xpath, components.size()));
+	}
+	public void addButtons(WebElement e, String xpath){
+		//components.add(new TextBox(e, xpath, components.size()));
+	}
+	public void addRadioButtons(WebElement e, String xpath){
+		//components.add(new TextBox(e, xpath, components.size()));
+	}
+	
+	
 	public void generate(){
 		generatePackage();
 		writer.println();
