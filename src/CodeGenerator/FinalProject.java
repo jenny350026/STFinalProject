@@ -59,7 +59,7 @@ public class FinalProject {
 		Generator g = new Generator("http://www.delta.com", toClickAtSetUp);
 		
 
-		// TODO change to use HtmlUnitDriver so we don't need to 
+		// TODO change to use HtmlUnitDriver so we don't need to max
 		// open GUI when generating tests
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		driver = new ChromeDriver();
