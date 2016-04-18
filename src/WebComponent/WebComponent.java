@@ -1,9 +1,9 @@
-package CodeGenerator;
+package WebComponent;
 import java.util.ArrayList;
 
 import org.openqa.selenium.WebElement;
 
-abstract class WebComponent {
+public abstract class WebComponent {
 	protected WebElement element;
 	protected String xpath;
 	protected int id;

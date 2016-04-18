@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
+import WebComponent.TextBox;
+import WebComponent.WebComponent;
+
 public class Generator {
 	private String address;
 	ArrayList<String> toClickAtSetUp;

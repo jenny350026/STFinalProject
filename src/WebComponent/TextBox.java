@@ -1,4 +1,4 @@
-package CodeGenerator;
+package WebComponent;
 
 import java.util.ArrayList;
 
