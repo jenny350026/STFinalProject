@@ -27,17 +27,7 @@ public class FinalProject {
 	}
 
 	// source :　https://groups.google.com/forum/#!topic/selenium-users/kvGLSzl_GQE
-	public static String getXPath(WebElement element) { 
-//        String jscript = "function getPathTo(node) {" + 
-//            "  var stack = [];" + 
-//            "  while(node.parentNode !== null) {" + 
-//            "    stack.unshift(node.tagName);" + 
-//            "    node = node.parentNode;" + 
-//            "  }" + 
-//            "  return stack.join('/');" + 
-//            "}" + 
-//            "return getPathTo(arguments[0]);"; 
-       
+	public static String getXPath(WebElement element) {      
         String jscript = "function getElementXPath(elt){" +
                 "var path = \"\";" +
                 "for (; elt && elt.nodeType == 1; elt = elt.parentNode){" +
