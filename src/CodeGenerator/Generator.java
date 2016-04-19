@@ -129,6 +129,7 @@ public class Generator {
 		}
 	}
 	
+	// TODO remove adds, create a function that takes a WebTree;
 	public void addTextBox(WebElement e, String xpath){
 		components.add(new TextBox(e, xpath, components.size()));
 	}
