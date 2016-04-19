@@ -134,7 +134,7 @@ public class FinalProject {
 
 		//recursion to build the tree
 		for (int i = 0; i < head.getNext().size(); i++) {
-			buildSubNode(head.getNext().get(i), subOptions.get(i), subBoxes.get(i));
+			buildTree(head.getNext().get(i), subOptions.get(i), subBoxes.get(i));
 		}
 
 	}
