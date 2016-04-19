@@ -61,7 +61,7 @@ public class FinalProject {
 		return (String) ((RemoteWebDriver) driver).executeScript(jscript, element);
 	}
 
-	public static void buildSubNode(WebNode head, List<WebElement> dropdowns, List<WebElement> boxes) {
+	public static void buildTree(WebNode head, List<WebElement> dropdowns, List<WebElement> boxes) {
 		
 		if(head==null || dropdowns.isEmpty() || boxes.isEmpty()) 
 			return;
@@ -167,7 +167,7 @@ public class FinalProject {
 			WebNode head = new WebNode();
 			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='infoContainer']//option"));
 			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));
-			buildSubNode(head, dropdowns, boxes);
+			buildTree(head, dropdowns, boxes);
 		}
 		
 //		//book a trip
