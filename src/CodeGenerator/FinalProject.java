@@ -64,7 +64,7 @@ public class FinalProject {
 
 	public static void buildTree(WebNode head, List<WebElement> dropdowns, List<WebElement> boxes) {
 		
-		if(head==null || dropdowns.isEmpty() || boxes.isEmpty()) 
+		if(dropdowns.isEmpty() && boxes.isEmpty()) 
 			return;
 		
 		//options and boxes at this level
@@ -125,10 +125,10 @@ public class FinalProject {
 		
 		//load element at this level into WebComponent
 		for (int i = 0; i < headBoxes.size(); i++) {
-			head.addElement(new TextBox(headBoxes.get(i), getXPath(headBoxes.get(i)), head.getElements().size()));
+			head.addElement(new TextBox(headBoxes.get(i), getXPath(headBoxes.get(i))));
 		}
 		for (int i = 0; i < headOptions.size(); i++) {
-			head.addSelect(new DropDown(headOptions.get(i), getXPath(headOptions.get(i)), head.getSelects().size()));
+			head.addSelect(new DropDown(headOptions.get(i), getXPath(headOptions.get(i))));
 			//WebNode node = new WebNode();
 			head.addNext();
 		}
@@ -169,8 +169,11 @@ public class FinalProject {
 			
 			//WebNode head = new WebNode();
 			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='infoContainer']//option"));
+			
 			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));
 			buildTree(tree.head, dropdowns, boxes);
+			System.out.println(tree);
+			g.generate(tree);
 		}
 		
 //		//book a trip
@@ -193,7 +196,7 @@ public class FinalProject {
 //			System.out.println("buttons: " + buttons.size());
 //		}
 
-		g.generate();
+		
 	}
 
 }

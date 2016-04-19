@@ -6,9 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class TextBox extends WebComponent{
+	private static int idCounter= 0;
 
-	public TextBox(WebElement e, String xp, int id) {
-		super(e, xp, id);
+	public TextBox(WebElement e, String xp) {
+		super(e, xp, idCounter++);
 	}
 
 	@Override
@@ -18,5 +19,10 @@ public class TextBox extends WebComponent{
 		strings.add("WebElement element" + id + " = driver.findElement(By.xpath(\"" + xpath + "\"));");
 		strings.add("element" + id + ".sendKeys(\"00000\");");
 		return strings;
+	}
+	
+	@Override
+	public String toString(){
+		return "textbox" + id;
 	}
 }

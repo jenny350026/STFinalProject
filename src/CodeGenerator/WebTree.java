@@ -19,6 +19,8 @@ public class WebTree {
 		private List<WebComponent> selects;//private WebComponentSelect select;
 		private List<WebNode> next;
 		
+		// class invariant : selects.size == next.size
+		
 		public WebNode(){
 			elements = new ArrayList<WebComponent>();
 			selects = new ArrayList<WebComponent>();
@@ -28,6 +30,8 @@ public class WebTree {
 		//elements
 		public void addElement(WebComponent elem){
 			elements.add(elem);
+//			System.out.print("adding element");
+//			System.out.println(elem);
 		}
 		
 		public List<WebComponent> getElements(){
@@ -56,6 +60,35 @@ public class WebTree {
 			return next;
 		}
 
+		public String toString(){
+			return toStringHelper(0);
+		}
+		
+		public String toStringHelper(int level){
+			String s = "";
+			for(int i = 0; i < level; ++i)
+				s += "\t";
+			s+= elements.size() + " elements in this node: \n";
+			for(int i = 0; i < elements.size(); ++i){
+				for(int j = 0; j < level; ++j)
+					s += "\t";
+				s += "element " + i + " " + elements.get(i).toString() + "\n";
+			}
+			for(int i = 0; i < selects.size(); ++i){
+				for(int j = 0; j < level; ++j)
+					s += "\t";
+				s += "select " + i + " " + selects.get(i).toString() + "\n";
+				s += next.get(i).toStringHelper(level+1);
+			}
+			return s;
+		}
+		
+	}
+	
+	public String toString(){
+		//System.out.println(head.selects.size());
+		return head.toString();
+		//return "this is head";
 	}
 	
 	

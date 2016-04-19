@@ -15,7 +15,7 @@ import WebComponent.WebComponent;
 public class Generator {
 	private String address;
 	ArrayList<String> toClickAtSetUp;
-	ArrayList<WebComponent> components;
+	//ArrayList<WebComponent> components;
 	
 	PrintWriter writer;
 	private int counter;
@@ -87,7 +87,7 @@ public class Generator {
 		printFormatted("private WebDriver driver;", 1);
 	}
 	
-	private void generateTests(){
+	private void generateTests(WebTree tree){
 		writer.println("public class DeltaTester {");
 		
 		generatePrivates();
@@ -102,11 +102,11 @@ public class Generator {
 			printFormatted("public void t" + counter++ + "() {", 1);
 			
 			//TODO change actions here
-			for(int j = 0; j < components.size(); ++j){
-				ArrayList<String> toPrint = components.get(j).testAction();
-				for(int k = 0; k < toPrint.size(); ++k)
-					printFormatted(toPrint.get(k), 2);
-			}
+//			for(int j = 0; j < components.size(); ++j){
+//				ArrayList<String> toPrint = components.get(j).testAction();
+//				for(int k = 0; k < toPrint.size(); ++k)
+//					printFormatted(toPrint.get(k), 2);
+//			}
 			
 			printFormatted("}", 1);
 			printFormatted("");
@@ -118,7 +118,7 @@ public class Generator {
 	public Generator(String address, ArrayList<String> toClickAtSetUp){
 		this.address = address;
 		this.toClickAtSetUp = toClickAtSetUp;
-		components = new ArrayList<WebComponent>();
+		//components = new ArrayList<WebComponent>();
 		
 		File file = new File("src/GeneratedTest/DeltaTester.java");
 		try {
@@ -130,30 +130,30 @@ public class Generator {
 	}
 	
 	// TODO remove adds, create a function that takes a WebTree;
-	public void addTextBox(WebElement e, String xpath){
-		components.add(new TextBox(e, xpath, components.size()));
-	}
+////	public void addTextBox(WebElement e, String xpath){
+////		components.add(new TextBox(e, xpath, components.size()));
+////	}
+//	
+//	//newly added
+//	public void addDropdown(WebElement e, String xpath){
+//		//components.add(new TextBox(e, xpath, components.size()));
+//	}
+//	public void addButtons(WebElement e, String xpath){
+//		//components.add(new TextBox(e, xpath, components.size()));
+//	}
+//	public void addRadioButtons(WebElement e, String xpath){
+//		//components.add(new TextBox(e, xpath, components.size()));
+//	}
 	
-	//newly added
-	public void addDropdown(WebElement e, String xpath){
-		//components.add(new TextBox(e, xpath, components.size()));
-	}
-	public void addButtons(WebElement e, String xpath){
-		//components.add(new TextBox(e, xpath, components.size()));
-	}
-	public void addRadioButtons(WebElement e, String xpath){
-		//components.add(new TextBox(e, xpath, components.size()));
-	}
 	
-	
-	public void generate(){
+	public void generate(WebTree g){
 		generatePackage();
 		writer.println();
 		
 		generateImports();
 		writer.println();
 		
-		generateTests();
+		generateTests(g);
 		writer.close();
 	}
 }
