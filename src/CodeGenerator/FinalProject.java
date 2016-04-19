@@ -156,33 +156,39 @@ public class FinalProject {
 			Thread.currentThread().interrupt();
 		}
 		
-		//my trips
-		{
-			WebElement myTrips = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a"));
-			myTrips.click();
-			
-			//options: radiobutton, link, checkbutton
-			//elements: button
-			// build tree
-			WebNode head = new WebNode();
-			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='infoContainer']//option"));
-			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));
-			buildTree(head, dropdowns, boxes);
-		}
-		
-//		//book a trip
+//		//my trips
 //		{
-//			WebElement bookATrip = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[2]/a"));
-//			bookATrip.click();
+//			WebElement myTrips = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a"));
+//			myTrips.click();
 //			
+//			//options: radiobutton, link, checkbutton
+//			//elements: button
+//			// build tree
 //			WebNode head = new WebNode();
-//			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='tabContainer']//option"));
-//			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='tabContainer']//input[@type='text']"));
-//			List<WebElement> radioButtons = driver.findElements(By.xpath("//div[@class='tabContainer']//span"));
-//			System.out.println("dropdowns: " + dropdowns.size());
-//			System.out.println("boxes: " + boxes.size());
-//			System.out.println("radioButtons: " + radioButtons.size());
+//			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='infoContainer']//option"));
+//			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));
+//			buildTree(head, dropdowns, boxes);
 //		}
+		
+		//book a trip
+		{
+			WebElement bookATrip = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[2]/a"));
+			bookATrip.click();
+			
+			WebNode head = new WebNode();
+			List<WebElement> links = driver.findElements(By.xpath("//div[@class='tabContainer']//a[@class='ui-tabs-anchor']"));
+			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='tabContainer']//option"));
+			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='tabContainer']//input[@type='text']"));
+			List<WebElement> radioButtons = driver.findElements(By.xpath("//div[@class='tabContainer']//span"));
+			List<WebElement> checkButtons = driver.findElements(By.xpath("//div[@class='tabContainer']//input[@type='checkbox']"));
+			List<WebElement> buttons = driver.findElements(By.xpath("//div[@class='tabContainer']//button"));
+			System.out.println("links: " + links.size());
+			System.out.println("dropdowns: " + dropdowns.size());
+			System.out.println("boxes: " + boxes.size());
+			System.out.println("radioButtons: " + radioButtons.size());
+			System.out.println("checkButtons: " + checkButtons.size());
+			System.out.println("buttons: " + buttons.size());
+		}
 
 		g.generate();
 	}

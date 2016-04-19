@@ -25,6 +25,7 @@ public class WebNode{
 	public List<WebComponent> getElements(){
 		return elements;
 	}
+	//max
 	
 	//selects
 	public void addSelect(WebComponent elem){
