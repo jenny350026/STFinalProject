@@ -7,32 +7,55 @@ import WebComponent.WebComponent;
 import WebComponent.WebComponentSelect;
 
 public class WebTree {
+	
+	public WebNode head;
+	
+	public WebTree(){
+		head = new WebNode();
+	}
+	
 	public class WebNode{
-		private List<WebNode> next;
 		private List<WebComponent> elements;
-		private WebComponentSelect select;
+		private List<WebComponent> selects;//private WebComponentSelect select;
+		private List<WebNode> next;
 		
 		public WebNode(){
-			next = new ArrayList<WebNode>();
 			elements = new ArrayList<WebComponent>();
-			select = null;
+			selects = new ArrayList<WebComponent>();
+			next = new ArrayList<WebNode>();
 		}
 		
-		public void addNext(WebNode nextNode){
-			next.add(nextNode);
-		}
-		
+		//elements
 		public void addElement(WebComponent elem){
 			elements.add(elem);
 		}
 		
-		public void setSelect(WebComponentSelect s){
-			select = s;
+		public List<WebComponent> getElements(){
+			return elements;
 		}
 		
-		public WebComponentSelect getSelect(){
-			return select;
+		//selects
+		public void addSelect(WebComponent elem){
+			selects.add(elem);
 		}
+		
+		public List<WebComponent> getSelects(){
+			return selects;
+		}
+		
+		//next
+		public void addNext(WebNode nextNode){
+			next.add(nextNode);
+		}
+		
+		public void addNext(){
+			next.add(new WebNode());
+		}
+		
+		public List<WebNode> getNext(){
+			return next;
+		}
+
 	}
 	
 	
