@@ -6,9 +6,11 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.openqa.selenium.WebElement;
 
+import CodeGenerator.WebTree.WebNode;
 import WebComponent.TextBox;
 import WebComponent.WebComponent;
 
@@ -87,31 +89,32 @@ public class Generator {
 		printFormatted("private WebDriver driver;", 1);
 	}
 	
-	private void generateTests(WebTree tree){
-		writer.println("public class DeltaTester {");
+	private void generateTests(List<WebComponent> components, List<WebComponent> selects){
+		System.out.println("NEW TEST");
 		
-		generatePrivates();
-		writer.println();
-		generateSetUp();
-		writer.println();
 		
 		//TODO numTests will depend on the pair-wise code
-		int numTests = 2;
-		for(int i = 0; i < numTests; ++i){
-			printFormatted("@Test", 1);
-			printFormatted("public void t" + counter++ + "() {", 1);
-			
-			//TODO change actions here
-//			for(int j = 0; j < components.size(); ++j){
-//				ArrayList<String> toPrint = components.get(j).testAction();
-//				for(int k = 0; k < toPrint.size(); ++k)
-//					printFormatted(toPrint.get(k), 2);
-//			}
-			
-			printFormatted("}", 1);
-			printFormatted("");
+		printFormatted("@Test", 1);
+		printFormatted("public void t" + counter++ + "() {", 1);
+		
+		for(WebComponent wc : selects){
+			System.out.println(wc);
+			ArrayList<String> toPrint = wc.testAction();
+			for(int k = 0; k < toPrint.size(); ++k)
+				printFormatted(toPrint.get(k), 2);
 		}
-		writer.println("}");
+		
+		//TODO change actions here
+		for(int j = 0; j < components.size(); ++j){
+			System.out.println(components.get(j));
+			ArrayList<String> toPrint = components.get(j).testAction();
+			for(int k = 0; k < toPrint.size(); ++k)
+				printFormatted(toPrint.get(k), 2);
+		}
+		
+		printFormatted("}", 1);
+		printFormatted("");
+	
 		System.out.println(TAG + "generated tests");
 	}
 	
@@ -127,33 +130,40 @@ public class Generator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}	
 	
-	// TODO remove adds, create a function that takes a WebTree;
-////	public void addTextBox(WebElement e, String xpath){
-////		components.add(new TextBox(e, xpath, components.size()));
-////	}
-//	
-//	//newly added
-//	public void addDropdown(WebElement e, String xpath){
-//		//components.add(new TextBox(e, xpath, components.size()));
-//	}
-//	public void addButtons(WebElement e, String xpath){
-//		//components.add(new TextBox(e, xpath, components.size()));
-//	}
-//	public void addRadioButtons(WebElement e, String xpath){
-//		//components.add(new TextBox(e, xpath, components.size()));
-//	}
-	
-	
-	public void generate(WebTree g){
+	public void generate(WebTree tree){
 		generatePackage();
 		writer.println();
 		
 		generateImports();
 		writer.println();
 		
-		generateTests(g);
+		writer.println("public class DeltaTester {");
+		
+		generatePrivates();
+		writer.println();
+		generateSetUp();
+		writer.println();
+		
+		// traverse tree...
+		traverse(tree.head, new ArrayList<WebComponent>(), new ArrayList<WebComponent>());
+		
+		writer.println("}");
 		writer.close();
+	}
+	
+	public void traverse(WebNode node, List<WebComponent> components, List<WebComponent> selects){
+		components.addAll(node.getElements());
+		if(node.getNext().isEmpty()){ // leaf
+			for(ArrayList<WebComponent> list : InputGenerator.generateInput(components))
+				generateTests(list, selects);
+		}
+		
+		for(int i = 0; i < node.getNext().size(); ++i){
+			List<WebComponent> newSelect = new ArrayList<WebComponent>(selects);
+			newSelect.add(node.getSelects().get(i));
+			traverse(node.getNext().get(i), new ArrayList<WebComponent>(components), newSelect);
+		}
 	}
 }

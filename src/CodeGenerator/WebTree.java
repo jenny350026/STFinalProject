@@ -91,6 +91,7 @@ public class WebTree {
 		//return "this is head";
 	}
 	
-	
-	// TODO add functions to build tree
+	public void traverse(){
+		
+	}
 }

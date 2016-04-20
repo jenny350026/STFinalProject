@@ -13,7 +13,10 @@ public class DropDown extends WebComponentSelect{
 
 	@Override
 	public ArrayList<String> testAction() {
-		return null;
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("WebElement " + toString() + " = driver.findElement(By.xpath(\"" + xpath + "\"));");
+		strings.add(toString() + ".click();");
+		return strings;
 	}
 	
 	@Override
@@ -21,6 +24,7 @@ public class DropDown extends WebComponentSelect{
 		// TODO add implementations
 		// Select dd = new Select(e);
 		// e.selectByIndex(0);
+		
 	}
 	
 	@Override
