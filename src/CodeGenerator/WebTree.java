@@ -15,20 +15,20 @@ public class WebTree {
 	}
 	
 	public class WebNode{
+		private List<WebComponentSelect> selects;//private WebComponentSelect select;
 		private List<WebComponent> elements;
-		private List<WebComponent> selects;//private WebComponentSelect select;
 		private List<WebNode> next;
 		
 		// class invariant : selects.size == next.size
 		
 		public WebNode(){
+			selects = new ArrayList<WebComponentSelect>();
 			elements = new ArrayList<WebComponent>();
-			selects = new ArrayList<WebComponent>();
 			next = new ArrayList<WebNode>();
 		}
 		
 		//elements
-		public void addElement(WebComponent elem){
+		public void addElements(WebComponent elem){
 			elements.add(elem);
 //			System.out.print("adding element");
 //			System.out.println(elem);
@@ -39,11 +39,11 @@ public class WebTree {
 		}
 		
 		//selects
-		public void addSelect(WebComponent elem){
+		public void addSelect(WebComponentSelect elem){
 			selects.add(elem);
 		}
 		
-		public List<WebComponent> getSelects(){
+		public List<WebComponentSelect> getSelects(){
 			return selects;
 		}
 		
@@ -82,6 +82,7 @@ public class WebTree {
 			}
 			return s;
 		}
+
 		
 	}
 	

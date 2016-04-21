@@ -1,15 +1,29 @@
 package WebComponent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.WebElement;
 
-public class DropDown extends WebComponentSelect{
-	private static int idCounter = 0;
+public class DropDown extends WebComponentSelect<DropDownOption>{
+	//private static int idCounter = 0;
 	
-	public DropDown(WebElement e, String xp) {
-		super(e, xp, idCounter++);
+	private List<DropDownOption> options;
+	
+//	public DropDown(WebElement e, String xp) {//could be deleted
+//		super(e, xp, idCounter++);
+//	}
+	
+	@Override
+	public void addOption(DropDownOption elem){
+		options.add(elem);
 	}
+	
+	@Override
+	public List<DropDownOption> getOptions(){
+		return options;
+	}
+	
 
 	@Override
 	public ArrayList<String> testAction() {
@@ -27,8 +41,9 @@ public class DropDown extends WebComponentSelect{
 		
 	}
 	
-	@Override
-	public String toString(){
-		return "dropdown" + id;
-	}
+//	@Override
+//	public String toString(){
+//		return "dropdown" + id;
+//	}
+
 }
