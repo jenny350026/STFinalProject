@@ -8,6 +8,12 @@ public abstract class WebComponent {
 	protected String xpath;
 	protected int id;
 	
+	public WebComponent(){
+		element = null;
+		xpath = "";
+		id = -1;
+	}
+	
 	public WebComponent(WebElement element, String xpath, int id){
 		this.element = element;
 		this.xpath = xpath;
