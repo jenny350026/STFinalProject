@@ -15,14 +15,14 @@ public class WebTree {
 	}
 	
 	public class WebNode{
-		private List<WebComponentSelect> selects;//private WebComponentSelect select;
+		private List<WebComponent> selects; // things that will change UI on click
 		private List<WebComponent> elements;
 		private List<WebNode> next;
 		
 		// class invariant : selects.size == next.size
 		
 		public WebNode(){
-			selects = new ArrayList<WebComponentSelect>();
+			selects = new ArrayList<WebComponent>();
 			elements = new ArrayList<WebComponent>();
 			next = new ArrayList<WebNode>();
 		}
@@ -43,7 +43,7 @@ public class WebTree {
 			selects.add(elem);
 		}
 		
-		public List<WebComponentSelect> getSelects(){
+		public List<WebComponent> getSelects(){
 			return selects;
 		}
 		

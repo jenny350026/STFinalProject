@@ -2,7 +2,6 @@ package WebComponent;
 
 import java.util.ArrayList;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class TextBox extends WebComponent{

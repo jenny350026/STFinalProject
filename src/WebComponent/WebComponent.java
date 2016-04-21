@@ -10,7 +10,7 @@ public abstract class WebComponent {
 	
 	public WebComponent(){
 		element = null;
-		xpath = "";
+		xpath = null;
 		id = -1;
 	}
 	
