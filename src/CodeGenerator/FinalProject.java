@@ -327,14 +327,15 @@ public class FinalProject {
 
 	public static void main(String[] args) {
 		ArrayList<String> toClickAtSetUp = new ArrayList<String>();
-		toClickAtSetUp.add("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a");
-		Generator g = new Generator("http://www.delta.com", toClickAtSetUp);
+		toClickAtSetUp.add("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]");
+		toClickAtSetUp.add("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]/div[3]/div[2]/div[1]/nav/ul/li[2]/a");
+		Generator g = new Generator("http://www.united.com", toClickAtSetUp);
 
 		// TODO change to use HtmlUnitDriver so we don't need to
 		// open GUI when generating tests
 		System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.get("http://www.delta.com/");
+		driver.get("http://www.united.com/");
 
 		try {
 			Thread.sleep(1000); // wait
@@ -344,8 +345,17 @@ public class FinalProject {
 		
 //		//my trips
 //		{
-//			WebElement myTrips = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a"));
-//			myTrips.click();
+//			WebElement MyTrips = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]"));
+//			MyTrips.click();
+//			try {
+//				Thread.sleep(1000); // wait
+//			} catch (InterruptedException ex) {
+//				Thread.currentThread().interrupt();
+//			}
+//			WebElement Car = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]/div[3]/div[2]/div[1]/nav/ul/li[2]/a"));
+//			Car.click();
+			
+			
 //			
 //			//options: radiobutton, link, checkbutton
 //			//elements: button
@@ -353,8 +363,8 @@ public class FinalProject {
 //			WebTree tree = new WebTree();
 //			
 //			//WebNode head = new WebNode();
-//			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@class='infoContainer']//option"));
-//			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));
+//			List<WebElement> dropdowns = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//option"));
+//			List<WebElement> boxes = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//input[@type='text']"));
 //			//boxes.get(1).sendKeys("hi");
 //			//boxes.get(1).click();
 //			buildTree(tree.head, dropdowns, boxes);
@@ -362,53 +372,47 @@ public class FinalProject {
 //			g.generate(tree);
 //		}
 		
-		//my trips new version
+		//my trips in United Airlines
 		{
-			WebElement myTrips = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/a"));
-			myTrips.click();
-
-//			// build tree
-//			WebTree tree = new WebTree();
-//			
-//			List<WebElement> dropDowns = driver.findElements(By.xpath("//div[@class='infoContainer']//select"));
-//			List<List<WebElement>> dropDownsForTree = new ArrayList<>();
-//			for(int i=0;i<dropDowns.size();i++){
-//				String dropdownID = dropDowns.get(i).getAttribute("id");
-//				List<WebElement> dropdownoptions = driver.findElements(By.xpath("//div[@class='infoContainer']//select[@id='" + dropdownID + "']//option"));
-//				dropDownsForTree.add(dropdownoptions);
-//			}
-//			
-//			List<WebElement> boxes = driver.findElements(By.xpath("//div[@class='infoContainer']//input[@type='text']"));	
-//			List<List<WebElement>> boxesForTree = new ArrayList<>();
-//			for(int i=0;i<boxes.size();i++){
-//				List<WebElement> box = new ArrayList<>();
-//				box.add(boxes.get(i));
-//				boxesForTree.add(box);
-//			}		
-			
+			WebElement MyTrips = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]"));
+			MyTrips.click();
 			try {
 				Thread.sleep(1000); // wait
 			} catch (InterruptedException ex) {
 				Thread.currentThread().interrupt();
 			}
+			WebElement Car = driver.findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]/div[3]/div[2]/div[1]/nav/ul/li[2]/a"));
+			Car.click();
+
+//			// build tree
+//			WebTree tree = new WebTree();
+//			
+			List<WebElement> dropDowns = driver.findElements(By.xpath("//div[@id='myTripsNav']//select"));
+			List<List<WebElement>> dropDownsForTree = new ArrayList<>();
+			for(int i=0;i<dropDowns.size();i++){
+				String dropdownID = dropDowns.get(i).getAttribute("id");
+				List<WebElement> dropdownoptions = driver.findElements(By.xpath("//div[@id='myTripsNav']//select[@id='" + dropdownID + "']//option"));
+				dropDownsForTree.add(dropdownoptions);
+			}
+			System.out.println("dropDownsForTree.size()" + dropDowns.size());
+			System.out.println("dropDownsForTree.get(0).size()" + dropDownsForTree.get(0).size());
+			System.out.println("dropDownsForTree.get(1).size()" + dropDownsForTree.get(1).size());
 			
-			WebElement tmp = driver.findElement(By.xpath("/html/body/main/div[1]/div[1]/div/nav/ul/li[1]/div/div/div[1]/div/form[1]/div/select"));
-			System.out.println("tmp.isEnabled()" + tmp.isEnabled());
-			System.out.println("tmp.isDisplayed()" + tmp.isDisplayed());
+			List<WebElement> boxes = driver.findElements(By.xpath("//div[@id='myTripsNav']//input[@type='text']"));	
+			List<List<WebElement>> boxesForTree = new ArrayList<>();
+			for(int i=0;i<boxes.size();i++){
+				List<WebElement> box = new ArrayList<>();
+				box.add(boxes.get(i));
+				boxesForTree.add(box);
+			}
+//			System.out.println("boxesForTree.size()" + boxes.size());
+//			System.out.println("boxesForTree.get(0).size()" + boxes.get(0).size());
 			
-//			Select sel = new Select(tmp);
-//			sel.selectByIndex(2);
-			
-			//System.out.println(boxesForTree.get(0).get(0).isDisplayed());
-			
-			
-//			tmp.click();
-//			System.out.println(dropDownsForTree.get(0).size());
-//			System.out.println(dropDownsForTree.get(0).get(0).isDisplayed());
-//			dropDownsForTree.get(0).get(0).click();
-//			dropDownsForTree.get(0).get(2).click();
-//			dropDownsForTree.get(0).get(1).click();
-			
+//			try {
+//				Thread.sleep(1000); // wait
+//			} catch (InterruptedException ex) {
+//				Thread.currentThread().interrupt();
+//			}
 			
 			//buildTree(tree.head, dropDownsForTree, boxesForTree);
 			
