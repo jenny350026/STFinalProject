@@ -15,20 +15,20 @@ public class WebTree {
 	}
 	
 	public class WebNode{
-		private List<WebComponentSelect> selects;//private WebComponentSelect select;
+		private List<WebComponent> selects; // things that will change UI on click
 		private List<WebComponent> elements;
 		private List<WebNode> next;
 		
 		// class invariant : selects.size == next.size
 		
 		public WebNode(){
-			selects = new ArrayList<WebComponentSelect>();
+			selects = new ArrayList<WebComponent>();
 			elements = new ArrayList<WebComponent>();
 			next = new ArrayList<WebNode>();
 		}
 		
 		//elements
-		public void addElements(WebComponent elem){
+		public void addElement(WebComponent elem){
 			elements.add(elem);
 //			System.out.print("adding element");
 //			System.out.println(elem);
@@ -39,11 +39,11 @@ public class WebTree {
 		}
 		
 		//selects
-		public void addSelect(WebComponentSelect elem){
+		public void addSelect(WebComponent elem){
 			selects.add(elem);
 		}
 		
-		public List<WebComponentSelect> getSelects(){
+		public List<WebComponent> getSelects(){
 			return selects;
 		}
 		
@@ -75,10 +75,20 @@ public class WebTree {
 				s += "element " + i + " " + elements.get(i).toString() + "\n";
 			}
 			for(int i = 0; i < selects.size(); ++i){
-				for(int j = 0; j < level; ++j)
-					s += "\t";
-				s += "select " + i + " " + selects.get(i).toString() + "\n";
-				s += next.get(i).toStringHelper(level+1);
+				if(selects.get(i) instanceof WebComponentSelect){
+					WebComponentSelect select = (WebComponentSelect) selects.get(i);
+					for(int m = 0; m < select.getOptions().size();m++){
+						for(int j = 0; j < level; ++j)
+							s += "\t";
+						s += "select " + m + " " + select.toString() + "\n";
+						s += next.get(m).toStringHelper(level+1);
+					}
+				}else{//may be checkbox, need to be fixed
+					for(int j = 0; j < level; ++j)
+						s += "\t";
+					s += "select " + i + " " + selects.get(i).toString() + "\n";
+					s += next.get(i).toStringHelper(level+1);
+				}
 			}
 			return s;
 		}

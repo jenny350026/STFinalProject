@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 import org.openqa.selenium.WebElement;
 
-public class DropDownOption extends WebComponent {
+public class Option extends WebComponent {
 
 	private static int idCounter = 0;
 
-	public DropDownOption(WebElement e, String xp) {
+	public Option(WebElement e, String xp) {
 		super(e, xp, idCounter++);
 	}
 
@@ -17,15 +17,8 @@ public class DropDownOption extends WebComponent {
 		return null;
 	}
 
-//	@Override
-//	public void select() {
-//		// TODO add implementations
-//		// Select dd = new Select(e);
-//		// e.selectByIndex(0);
-//	}
-
 	@Override
 	public String toString() {
-		return "DropDownOption" + id;
+		return "Option" + id;
 	}
 }
