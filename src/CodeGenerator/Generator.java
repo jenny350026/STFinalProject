@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.openqa.selenium.WebElement;
@@ -13,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import CodeGenerator.WebTree.WebNode;
 import WebComponent.TextBox;
 import WebComponent.WebComponent;
+import WebComponent.WebComponentSelect;
 
 public class Generator {
 	private String address;
@@ -35,7 +38,13 @@ public class Generator {
 		"org.junit.Before"
 	};
 	
- 
+	private void printSleep(int indent){
+		printFormatted("try {", indent);
+		printFormatted("Thread.sleep(1000); // wait", indent+1);
+		printFormatted("} catch (InterruptedException ex) {", indent);
+		printFormatted("Thread.currentThread().interrupt();", indent+1);
+		printFormatted("}", indent);
+	}
 	
 	private void printFormatted(String s){
 		printFormatted(s, 0);
@@ -67,17 +76,10 @@ public class Generator {
 		printFormatted("driver = new ChromeDriver();", 2);
 		printFormatted("driver.get(\"" + address + "\");", 2);
 		
-		/* doesn't seem necessary right now
-		printFormatted("try {", 2);
-		printFormatted("Thread.sleep(3000); // wait", 3);
-		printFormatted("} catch (InterruptedException ex) {", 2);
-		printFormatted("Thread.currentThread().interrupt();", 3);
-		printFormatted("}", 2);
-		*/
-		
 		for(int i = 0; i < toClickAtSetUp.size(); ++i){
 			printFormatted("WebElement toClick" + i + " = driver.findElement(By.xpath(\"" + toClickAtSetUp.get(i) +"\"));", 2);
 			printFormatted("toClick" + i + ".click();", 2);
+			printSleep(2);
 		}
 		
 		printFormatted("}", 1);
@@ -89,7 +91,7 @@ public class Generator {
 		printFormatted("private WebDriver driver;", 1);
 	}
 	
-	private void generateTests(List<WebComponent> components, List<WebComponent> selects){
+	private void generateTests(List<WebComponent> components, Map<WebComponent, Integer> selects){
 		System.out.println("NEW TEST");
 		
 		
@@ -97,11 +99,15 @@ public class Generator {
 		printFormatted("@Test", 1);
 		printFormatted("public void t" + counter++ + "() {", 1);
 		
-		for(WebComponent wc : selects){
-			System.out.println(wc);
-			ArrayList<String> toPrint = wc.testAction();
-			for(int k = 0; k < toPrint.size(); ++k)
-				printFormatted(toPrint.get(k), 2);
+		for(WebComponent wc : selects.keySet()){
+			if(wc instanceof WebComponentSelect){
+				System.out.println(wc);
+				((WebComponentSelect)wc).select(selects.get(wc));
+				ArrayList<String> toPrint = wc.testAction();
+				for(int k = 0; k < toPrint.size(); ++k)
+					printFormatted(toPrint.get(k), 2);
+			}
+			//TODO add checkbox
 		}
 		
 		//TODO change actions here
@@ -147,23 +153,28 @@ public class Generator {
 		writer.println();
 		
 		// traverse tree...
-		traverse(tree.head, new ArrayList<WebComponent>(), new ArrayList<WebComponent>());
+		traverse(tree.head, new ArrayList<WebComponent>(), new HashMap<WebComponent, Integer>());
 		
 		writer.println("}");
 		writer.close();
 	}
 	
-	public void traverse(WebNode node, List<WebComponent> components, List<WebComponent> selects){
+	public void traverse(WebNode node, List<WebComponent> components, Map<WebComponent, Integer> selects){
 		components.addAll(node.getElements());
 		if(node.getNext().isEmpty()){ // leaf
 			for(ArrayList<WebComponent> list : InputGenerator.generateInput(components))
 				generateTests(list, selects);
 		}
 		
-		for(int i = 0; i < node.getNext().size(); ++i){
-			List<WebComponent> newSelect = new ArrayList<WebComponent>(selects);
-			newSelect.add(node.getSelects().get(i));
-			traverse(node.getNext().get(i), new ArrayList<WebComponent>(components), newSelect);
+		for(WebComponent s : node.getSelects()){
+			if(s instanceof WebComponentSelect){
+				for(int i = 0; i < ((WebComponentSelect)s).getOptions().size(); ++i){
+					Map<WebComponent, Integer> newSelect = new HashMap<WebComponent, Integer>(selects);
+					newSelect.put(s, i);
+					traverse(node.getNext().get(i), new ArrayList<WebComponent>(components), newSelect);
+				}
+			}
+			// TODO add checkbox
 		}
 	}
 }

@@ -8,17 +8,18 @@ public class DropDown extends WebComponentSelect{
 		super();
 	}
 	
-	@Override
-	public ArrayList<String> testAction() {
-		return null;
+	public DropDown(DropDown dd){
+		super(dd);
 	}
 	
-//	@Override
-
-//	public void select(){
-//		// TODO add implementations
-//		// Select dd = new Select(e);
-//		// e.selectByIndex(0);
+	@Override
+	public ArrayList<String> testAction() {
+		ArrayList<String> strings = new ArrayList<String>();
+		WebComponent wc = options.get(selected);
+		strings.add("WebElement " + wc.toString() + " = driver.findElement(By.xpath(\"" + wc.xpath + "\"));");
+		strings.add(wc.toString() + ".click();");
+		return strings; 
+	}
 
 	public String toString(){
 		return "dropdown" + id + " with " + options.size() + " options";

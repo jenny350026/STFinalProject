@@ -20,5 +20,6 @@ public abstract class WebComponent {
 		this.id = id;
 	}
 	
+	
 	public abstract ArrayList<String> testAction();
 }

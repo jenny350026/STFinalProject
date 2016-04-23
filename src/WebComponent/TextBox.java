@@ -11,10 +11,12 @@ public class TextBox extends WebComponent{
 
 	public TextBox(WebElement e, String xp) {
 		super(e, xp, idCounter++);
+		content = "";
 	}
 	
 	public TextBox(TextBox bt){
 		super(bt.element, bt.xpath, idCounter++);
+		content = "";
 	}
 	
 	public void setContent(String c){

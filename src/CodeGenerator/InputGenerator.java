@@ -2,7 +2,9 @@ package CodeGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+import WebComponent.DropDown;
 import WebComponent.TextBox;
 import WebComponent.WebComponent;
 
@@ -16,6 +18,11 @@ public class InputGenerator {
 					TextBox tb = new TextBox((TextBox)wc);
 					tb.setContent(""+i);
 					newTest.add(tb);
+				}
+				else if(wc instanceof DropDown){
+					DropDown dd = new DropDown((DropDown) wc);
+					dd.select(dd.getOptions().size()-1);
+					newTest.add(dd);					
 				}
 				//else .. add actions for other types
 			}	

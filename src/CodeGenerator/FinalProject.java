@@ -374,7 +374,7 @@ public class FinalProject {
 			buildTree(tree.head, dropDownsForTree, boxesForTree);
 			
 			System.out.println(tree);
-			//g.generate(tree);
+			g.generate(tree);
 		}
 
 	}
