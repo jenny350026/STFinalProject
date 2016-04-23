@@ -208,7 +208,7 @@ public class FinalProject {
 			}
 			if(twoListsEqual){
 				List<WebElement> elem = headSelects.get(i);
-				elements.add(elem);
+				headElements.add(elem);
 				headSelects.remove(elem);
 				i--;
 			}
@@ -281,13 +281,8 @@ public class FinalProject {
 		for (int i = 0; i < headElements.size(); i++) {
 			List<WebElement> tmpHeadElementList = new ArrayList<>();
 			tmpHeadElementList = headElements.get(i);
-				//if this element is textBox
-				if(tmpHeadElementList.get(0).getAttribute("type").equals("text")){
-					WebElement addElement = tmpHeadElementList.get(0);
-					TextBox textbox = new TextBox(addElement, getXPath(addElement));
-					head.addElement(textbox);
 				//if this element is dropDown
-				}else if(tmpHeadElementList.get(0).getTagName().equals("option")){
+				if(tmpHeadElementList.get(0).getTagName().equals("option")){
 					DropDown dropdown = new DropDown();
 					for(int j=0;j<tmpHeadElementList.size();j++){
 						WebElement addElement = tmpHeadElementList.get(j);
@@ -302,6 +297,11 @@ public class FinalProject {
 						radiobutton.addOption(new Option(addElement, getXPath(addElement))) ;
 					}
 					head.addElement(radiobutton);
+				//if this element is textBox
+				}else if(tmpHeadElementList.get(0).getAttribute("type").equals("text")){
+					WebElement addElement = tmpHeadElementList.get(0);
+					TextBox textbox = new TextBox(addElement, getXPath(addElement));
+					head.addElement(textbox);
 				//if this element is checkBox
 				}else if(tmpHeadElementList.get(0).getAttribute("type").equals("checkbox")){
 					WebElement addElement = tmpHeadElementList.get(0);
