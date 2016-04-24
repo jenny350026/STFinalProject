@@ -17,6 +17,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import CodeGenerator.WebTree.WebNode;
+import WebComponent.Button;
 import WebComponent.CheckBox;
 import WebComponent.DropDown;
 import WebComponent.Option;
@@ -79,6 +80,17 @@ public class FinalProject {
 		//options and boxes at next(sub) level
 		List<List<List<WebElement>>> subSelects = new ArrayList<>();
 		List<List<List<WebElement>>> subElements = new ArrayList<>();
+		
+		//push buttons into headElements
+		for(int i=0; i < elements.size(); i++){
+			List<WebElement> buttonToBe = elements.get(i);
+			if(buttonToBe.get(0).getTagName().equals("button")){
+				if(buttonToBe.get(0).isDisplayed()){
+					headElements.add(buttonToBe);
+					elements.remove(buttonToBe);
+				}
+			}
+		}
 		
 		//find the elements in this level
 		for (int i = 0; i < selects.size() + elements.size(); i++) {
@@ -297,6 +309,11 @@ public class FinalProject {
 						radiobutton.addOption(new Option(addElement, getXPath(addElement))) ;
 					}
 					head.addElement(radiobutton);
+				//if this element is button
+				}else if(tmpHeadElementList.get(0).getTagName().equals("button")){
+					WebElement addElement = tmpHeadElementList.get(0);
+					Button button = new Button(addElement, getXPath(addElement));
+					head.addElement(button);
 				//if this element is textBox
 				}else if(tmpHeadElementList.get(0).getAttribute("type").equals("text")){
 					WebElement addElement = tmpHeadElementList.get(0);
@@ -354,24 +371,30 @@ public class FinalProject {
 			// build tree
 			WebTree tree = new WebTree();
 			
-			List<WebElement> dropDowns = driver.findElements(By.xpath("//div[@id='myTripsNav']//select"));
+			List<WebElement> dropDowns = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//select"));
 			List<List<WebElement>> dropDownsForTree = new ArrayList<>();
 			for(int i=0;i<dropDowns.size();i++){
 				String dropdownID = dropDowns.get(i).getAttribute("id");
-				List<WebElement> dropdownoptions = driver.findElements(By.xpath("//div[@id='myTripsNav']//select[@id='" + dropdownID + "']//option"));
+				List<WebElement> dropdownoptions = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//select[@id='" + dropdownID + "']//option"));
 				dropDownsForTree.add(dropdownoptions);
 			}
 
-			List<WebElement> boxes = driver.findElements(By.xpath("//div[@id='myTripsNav']//input[@type='text']"));	
-			List<List<WebElement>> boxesForTree = new ArrayList<>();
+			List<WebElement> boxes = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//input[@type='text']"));	
+			List<WebElement> buttons = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//button"));	
+			List<List<WebElement>> elementsForTree = new ArrayList<>();
+
 			for(int i=0;i<boxes.size();i++){
 				List<WebElement> box = new ArrayList<>();
-					box.add(boxes.get(i));
-					boxesForTree.add(box);
+				box.add(boxes.get(i));
+				elementsForTree.add(box);
 			}
-			System.out.println(boxesForTree.size());
+			for(int i=0;i<buttons.size();i++){
+				List<WebElement> button = new ArrayList<>();
+				button.add(buttons.get(i));
+				elementsForTree.add(button);
+			}
 			
-			buildTree(tree.head, dropDownsForTree, boxesForTree);
+			buildTree(tree.head, dropDownsForTree, elementsForTree);
 			
 			System.out.println(tree);
 			g.generate(tree);
