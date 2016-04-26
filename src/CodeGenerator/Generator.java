@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -138,7 +139,7 @@ public class Generator {
 		}
 	}	
 	
-	public void generate(WebTree tree){
+	public void generate(WebTree tree) throws ParseException{
 		generatePackage();
 		writer.println();
 		
@@ -159,7 +160,7 @@ public class Generator {
 		writer.close();
 	}
 	
-	public void traverse(WebNode node, List<WebComponent> components, Map<WebComponent, Integer> selects){
+	public void traverse(WebNode node, List<WebComponent> components, Map<WebComponent, Integer> selects) throws ParseException{
 		components.addAll(node.getElements());
 		if(node.getNext().isEmpty()){ // leaf
 			for(ArrayList<WebComponent> list : InputGenerator.generateInput(components))

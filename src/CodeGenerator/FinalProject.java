@@ -3,6 +3,7 @@ package CodeGenerator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -74,12 +75,12 @@ public class FinalProject {
 			return;
 		
 		//options and boxes at this level
-		List<List<WebElement>> headSelects = new ArrayList<>();
-		List<List<WebElement>> headElements = new ArrayList<>();
+		List<List<WebElement>> headSelects = new ArrayList<List<WebElement>>();
+		List<List<WebElement>> headElements = new ArrayList<List<WebElement>>();
 
 		//options and boxes at next(sub) level
-		List<List<List<WebElement>>> subSelects = new ArrayList<>();
-		List<List<List<WebElement>>> subElements = new ArrayList<>();
+		List<List<List<WebElement>>> subSelects = new ArrayList<List<List<WebElement>>>();
+		List<List<List<WebElement>>> subElements = new ArrayList<List<List<WebElement>>>();
 		
 		//push buttons into headElements
 		for(int i=0; i < elements.size(); i++){
@@ -98,7 +99,7 @@ public class FinalProject {
 			if (i < selects.size()) {
 				int breakFlag = 0;
 				
-				List<WebElement> selectArray = new ArrayList<>();
+				List<WebElement> selectArray = new ArrayList<WebElement>();
 				selectArray = selects.get(i);
 				
 				//if this is not displayed, it cannot be the headSelects
@@ -125,7 +126,7 @@ public class FinalProject {
 			} else {
 				int breakFlag = 0;
 
-				List<WebElement> elementArray = new ArrayList<>();
+				List<WebElement> elementArray = new ArrayList<WebElement>();
 				elementArray = elements.get(i-selects.size());
 
 				//click all options in this list of list
@@ -159,7 +160,7 @@ public class FinalProject {
 			headSelects.get(i).get(0).click();
 			
 			//save the old status of other elements
-			List<Boolean> oldStatus = new ArrayList<>();
+			List<Boolean> oldStatus = new ArrayList<Boolean>();
 			for(int j=0;j<selects.size()+elements.size();j++){
 				//deal with selects which are not headSelects
 				if(j<selects.size()){
@@ -184,7 +185,7 @@ public class FinalProject {
 			headSelects.get(i).get(1).click();
 			
 			//save the new status of other elements
-			List<Boolean> newStatus = new ArrayList<>();
+			List<Boolean> newStatus = new ArrayList<Boolean>();
 			for(int j=0;j<selects.size()+elements.size();j++){
 				//deal with selects which are not headSelects
 				if(j<selects.size()){
@@ -235,7 +236,7 @@ public class FinalProject {
 		for (int i = 0; i < headSelects.size(); i++) {
 			for(int k = 0; k < headSelects.get(i).size(); k++){
 				headSelects.get(i).get(k).click();
-				List<List<WebElement>> tmpSelectList = new ArrayList<>();
+				List<List<WebElement>> tmpSelectList = new ArrayList<List<WebElement>>();
 				subSelects.add(tmpSelectList);
 				for (int j = 0; j < selects.size(); j++) {
 					if (!headSelects.contains(selects.get(j))) {
@@ -244,7 +245,7 @@ public class FinalProject {
 						}
 					}
 				}
-				List<List<WebElement>> tmpElementList = new ArrayList<>();
+				List<List<WebElement>> tmpElementList = new ArrayList<List<WebElement>>();
 				subElements.add(tmpElementList);
 				for (int j = 0; j < elements.size(); j++) {
 					if (!headElements.contains(elements.get(j))) {
@@ -262,7 +263,7 @@ public class FinalProject {
 		//load selects at this level into WebComponent
 		for (int i = 0; i < headSelects.size(); i++) {
 			//need to differentiate variant types 
-			List<WebElement> tmpHeadSelectList = new ArrayList<>();
+			List<WebElement> tmpHeadSelectList = new ArrayList<WebElement>();
 			tmpHeadSelectList = headSelects.get(i);
 				//if this select is dropDown
 				if(tmpHeadSelectList.get(0).getTagName().equals("option")){
@@ -291,7 +292,7 @@ public class FinalProject {
 		
 		//load elements at this level into WebComponent
 		for (int i = 0; i < headElements.size(); i++) {
-			List<WebElement> tmpHeadElementList = new ArrayList<>();
+			List<WebElement> tmpHeadElementList = new ArrayList<WebElement>();
 			tmpHeadElementList = headElements.get(i);
 				//if this element is dropDown
 				if(tmpHeadElementList.get(0).getTagName().equals("option")){
@@ -338,7 +339,7 @@ public class FinalProject {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		ArrayList<String> toClickAtSetUp = new ArrayList<String>();
 		toClickAtSetUp.add("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]");
 		toClickAtSetUp.add("/html/body/div[1]/div[2]/div/div[2]/div[1]/div[6]/div[3]/div[2]/div[1]/nav/ul/li[2]/a");
@@ -372,7 +373,7 @@ public class FinalProject {
 			WebTree tree = new WebTree();
 			
 			List<WebElement> dropDowns = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//select"));
-			List<List<WebElement>> dropDownsForTree = new ArrayList<>();
+			List<List<WebElement>> dropDownsForTree = new ArrayList<List<WebElement>>();
 			for(int i=0;i<dropDowns.size();i++){
 				String dropdownID = dropDowns.get(i).getAttribute("id");
 				List<WebElement> dropdownoptions = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//select[@id='" + dropdownID + "']//option"));
@@ -381,15 +382,15 @@ public class FinalProject {
 
 			List<WebElement> boxes = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//input[@type='text']"));	
 			List<WebElement> buttons = driver.findElements(By.xpath("//div[@id='myTripsNav-2']//button"));	
-			List<List<WebElement>> elementsForTree = new ArrayList<>();
+			List<List<WebElement>> elementsForTree = new ArrayList<List<WebElement>>();
 
 			for(int i=0;i<boxes.size();i++){
-				List<WebElement> box = new ArrayList<>();
+				List<WebElement> box = new ArrayList<WebElement>();
 				box.add(boxes.get(i));
 				elementsForTree.add(box);
 			}
 			for(int i=0;i<buttons.size();i++){
-				List<WebElement> button = new ArrayList<>();
+				List<WebElement> button = new ArrayList<WebElement>();
 				button.add(buttons.get(i));
 				elementsForTree.add(button);
 			}

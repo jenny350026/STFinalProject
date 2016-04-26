@@ -8,6 +8,11 @@ public class RadioButton extends WebComponentSelect{
 		super();
 	}
 
+	public RadioButton(RadioButton rb) {
+		// TODO Auto-generated constructor stub
+		super(rb);
+	}
+
 	@Override
 	public ArrayList<String> testAction() {
 		return null;

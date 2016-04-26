@@ -11,6 +11,11 @@ public class Button extends WebComponent{
 		super(e, xp, idCounter++);
 	}
 
+	public Button(Button bt) {
+		// TODO
+		super(bt.element, bt.xpath, idCounter++);
+	}
+
 	@Override
 	public ArrayList<String> testAction() {
 		// TODO 
