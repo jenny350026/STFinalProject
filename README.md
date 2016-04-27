@@ -17,6 +17,7 @@ Save and check the xml, following code is added
     <version>0.8</version>
     <type>jar</type>
 </dependency>
+7. click on Maven -> update Project
 
 
 ## Libraries
@@ -25,3 +26,5 @@ Apache Commons Lang -- https://commons.apache.org/proper/commons-lang/download_l
 Selenium Web Driver -- http://www.seleniumhq.org/
 
 Joda-time -- http://www.joda.org/joda-time/index.html
+
+datafactory -- http://mvnrepository.com/artifact/org.fluttercode.datafactory/datafactory/0.8

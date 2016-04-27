@@ -14,6 +14,7 @@ import java.util.Stack;
 import org.openqa.selenium.WebElement;
 
 import CodeGenerator.WebTree.WebNode;
+import WebComponent.Button;
 import WebComponent.TextBox;
 import WebComponent.WebComponent;
 import WebComponent.WebComponentSelect;
@@ -32,16 +33,16 @@ public class Generator {
 		"org.openqa.selenium.WebDriver",
 		"org.openqa.selenium.WebElement",
 		"org.openqa.selenium.chrome.*",
-		"org.openqa.selenium.interactions.Actions",
-		"org.openqa.selenium.support.ui.Select",
-		"static org.junit.Assert.*",
+//		"org.openqa.selenium.interactions.Actions",
+//		"org.openqa.selenium.support.ui.Select",
+//		"static org.junit.Assert.*",
 		"org.junit.Test",
 		"org.junit.Before"
 	};
 	
 	private void printSleep(int indent){
 		printFormatted("try {", indent);
-		printFormatted("Thread.sleep(1000); // wait", indent+1);
+		printFormatted("Thread.sleep(5000); // wait", indent+1);
 		printFormatted("} catch (InterruptedException ex) {", indent);
 		printFormatted("Thread.currentThread().interrupt();", indent+1);
 		printFormatted("}", indent);
@@ -92,7 +93,7 @@ public class Generator {
 		printFormatted("private WebDriver driver;", 1);
 	}
 	
-	private void generateTests(List<WebComponent> components, Map<WebComponent, Integer> selects){
+	private void generateTests(List<WebComponent> components, Map<WebComponent, Integer> selects, List<Button> buttons){
 		System.out.println("NEW TEST");
 		
 		
@@ -115,6 +116,12 @@ public class Generator {
 		for(int j = 0; j < components.size(); ++j){
 			System.out.println(components.get(j));
 			ArrayList<String> toPrint = components.get(j).testAction();
+			for(int k = 0; k < toPrint.size(); ++k)
+				printFormatted(toPrint.get(k), 2);
+		}
+		
+		for(int i = 0; i < buttons.size(); ++i){
+			ArrayList<String> toPrint = buttons.get(i).testAction();
 			for(int k = 0; k < toPrint.size(); ++k)
 				printFormatted(toPrint.get(k), 2);
 		}
@@ -163,8 +170,9 @@ public class Generator {
 	public void traverse(WebNode node, List<WebComponent> components, Map<WebComponent, Integer> selects) throws ParseException{
 		components.addAll(node.getElements());
 		if(node.getNext().isEmpty()){ // leaf
+			List<Button> buttons = extractButtons(components);
 			for(ArrayList<WebComponent> list : InputGenerator.generateInput(components))
-				generateTests(list, selects);
+				generateTests(list, selects, buttons);
 		}
 		
 		for(WebComponent s : node.getSelects()){
@@ -177,5 +185,20 @@ public class Generator {
 			}
 			// TODO add checkbox
 		}
+	}
+	
+	public List<Button> extractButtons(List<WebComponent> list){
+		List<Button> buttons = new ArrayList<Button>();
+		int index = 0;
+		while(index < list.size()){
+			if(list.get(index) instanceof Button){
+				buttons.add((Button) list.get(index));
+				list.remove(index);
+			}
+			else{
+				index++;
+			}
+		}
+		return buttons;
 	}
 }

@@ -18,8 +18,11 @@ public class Button extends WebComponent{
 
 	@Override
 	public ArrayList<String> testAction() {
-		// TODO 
-		return null;
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("WebElement " + toString() + " = driver.findElement(By.xpath(\"" + xpath + "\"));");
+		strings.add(toString() + ".click();");
+		return strings; 
+//		return null;
 	}
 	
 	@Override
