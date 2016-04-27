@@ -18,7 +18,7 @@ public class InputGenerator {
 		Random randomgen = new Random();
 		int choice;
 		int round = 11;
-		for(int i = 0; i < round; ++i){
+		for(int i = 0; i < round ; ++i){
 			ArrayList<WebComponent> newTest = new ArrayList<WebComponent>();
 			for(WebComponent wc : components){
 				if(wc instanceof TextBox){
@@ -49,7 +49,7 @@ public class InputGenerator {
 						str = GenerateInput.phoneNum(true, 1);
 						break;
 					case 7:
-						str = GenerateInput.time(true, 1);
+						str = GenerateInput.time(true, 4);
 						break;
 					case 8:
 						str = GenerateInput.date(true, 0, "4/25/2016","12/31/2016");
@@ -62,14 +62,16 @@ public class InputGenerator {
 					}
 					tb.setContent(""+str);
 					newTest.add(tb);
+					System.out.println("round " + i + " textbox " + "choice " + choice + str);
 				}
 				else if(wc instanceof DropDown){
 					DropDown dd = new DropDown((DropDown) wc);
-					if(dd.getOptions().size()>round)round = dd.getOptions().size();
-					if(i < dd.getOptions().size())choice = i;
+					if(dd.getOptions().size()>round && dd.getOptions().size()<15)round = dd.getOptions().size();
+					if(i < dd.getOptions().size() && dd.getOptions().size()<= round)choice = i;
 					else choice = randomgen.nextInt(dd.getOptions().size());
 					dd.select(choice);
-					newTest.add(dd);					
+					newTest.add(dd);
+					System.out.println("round " + i + " DropDown " + "choice " + choice);
 				}
 				else if(wc instanceof CheckBox){
 					CheckBox cb = new CheckBox((CheckBox) wc);
@@ -77,19 +79,22 @@ public class InputGenerator {
 					else choice = randomgen.nextInt(2);
 					if(choice == 0)cb.setContent("NotClick");
 					else cb.setContent("Click");
-					newTest.add(cb);					
+					newTest.add(cb);	
+					System.out.println("round " + i + " CheckBox " + "choice " + choice);
 				}
 				else if(wc instanceof RadioButton){
 					RadioButton rb = new RadioButton((RadioButton) wc);
-					if(rb.getOptions().size()>round)round = rb.getOptions().size();
-					if(i < rb.getOptions().size())choice = i;
+					if(rb.getOptions().size()>round && rb.getOptions().size()<15)round = rb.getOptions().size();
+					if(i < rb.getOptions().size() && rb.getOptions().size() <= round)choice = i;
 					else choice = randomgen.nextInt(rb.getOptions().size());
 					rb.select(choice);
-					newTest.add(rb);					
+					newTest.add(rb);
+					System.out.println("round " + i + " RadioButton " + "choice " + choice);
 				}
 				else if(wc instanceof Button){
 					Button bt = new Button((Button) wc);
-					newTest.add(bt);					
+					newTest.add(bt);
+					System.out.println("round " + i + " Button");
 				}
 				//else .. add actions for other types
 			}	
