@@ -16,7 +16,7 @@ public class InputGenerator {
 	static List<ArrayList<WebComponent>> generateInput(List<WebComponent> components) throws ParseException{
 		List<ArrayList<WebComponent>> generatedInputs = new ArrayList<ArrayList<WebComponent>>();
 		Random randomgen = new Random();
-		int choice;
+		int choice, length;
 		int round = 11;
 		for(int i = 0; i < round ; ++i){
 			ArrayList<WebComponent> newTest = new ArrayList<WebComponent>();
@@ -28,16 +28,20 @@ public class InputGenerator {
 					String str = "";
 					switch(choice){
 					case 0:
-						str = GenerateInput.randomNum(5);
+						length = randomgen.nextInt(20)+1;
+						str = GenerateInput.randomNum(length);
 						break;
 					case 1:
-						str = GenerateInput.randomAlp(8);
+						length = randomgen.nextInt(20)+1;
+						str = GenerateInput.randomAlp(length);
 						break;
 					case 2:
-						str = GenerateInput.randomAlpnum(8);
+						length = randomgen.nextInt(20)+1;
+						str = GenerateInput.randomAlpnum(length);
 						break;
 					case 3:
-						str = GenerateInput.password(8, 16, 1, 3, 1);
+						length = randomgen.nextInt(10)+8;
+						str = GenerateInput.password(8, length, 1, 3, 1);
 						break;
 					case 4:
 						str = GenerateInput.address();
@@ -46,7 +50,7 @@ public class InputGenerator {
 						str = GenerateInput.cityName();
 						break;
 					case 6:
-						str = GenerateInput.phoneNum(true, 1);
+						str = GenerateInput.phoneNum(true, 3);
 						break;
 					case 7:
 						str = GenerateInput.time(true, 4);
@@ -66,8 +70,8 @@ public class InputGenerator {
 				}
 				else if(wc instanceof DropDown){
 					DropDown dd = new DropDown((DropDown) wc);
-					if(dd.getOptions().size()>round && dd.getOptions().size()<15)round = dd.getOptions().size();
-					if(i < dd.getOptions().size() && dd.getOptions().size()<= round)choice = i;
+					if(dd.getOptions().size()>round )round = dd.getOptions().size();
+					if(i < dd.getOptions().size())choice = i;
 					else choice = randomgen.nextInt(dd.getOptions().size());
 					dd.select(choice);
 					newTest.add(dd);
@@ -84,8 +88,8 @@ public class InputGenerator {
 				}
 				else if(wc instanceof RadioButton){
 					RadioButton rb = new RadioButton((RadioButton) wc);
-					if(rb.getOptions().size()>round && rb.getOptions().size()<15)round = rb.getOptions().size();
-					if(i < rb.getOptions().size() && rb.getOptions().size() <= round)choice = i;
+					if(rb.getOptions().size()>round)round = rb.getOptions().size();
+					if(i < rb.getOptions().size())choice = i;
 					else choice = randomgen.nextInt(rb.getOptions().size());
 					rb.select(choice);
 					newTest.add(rb);
