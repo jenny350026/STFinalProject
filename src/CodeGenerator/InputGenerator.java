@@ -17,7 +17,7 @@ public class InputGenerator {
 		List<ArrayList<WebComponent>> generatedInputs = new ArrayList<ArrayList<WebComponent>>();
 		Random randomgen = new Random();
 		int choice, length;
-		int round = 11;
+		int round = 15;
 		for(int i = 0; i < round ; ++i){
 			ArrayList<WebComponent> newTest = new ArrayList<WebComponent>();
 			for(WebComponent wc : components){
@@ -50,7 +50,7 @@ public class InputGenerator {
 						str = GenerateInput.cityName();
 						break;
 					case 6:
-						str = GenerateInput.phoneNum(true, 3);
+						str = GenerateInput.phoneNum(true, 1);
 						break;
 					case 7:
 						str = GenerateInput.time(true, 4);
