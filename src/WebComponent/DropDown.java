@@ -22,7 +22,7 @@ public class DropDown extends WebComponentSelect{
 	}
 
 	public String toString(){
-		return "dropdown" + id + " with " + options.size() + " options";
+		return "dropdown " + id + " with " + options.size() + " options";
 
 	}
 
