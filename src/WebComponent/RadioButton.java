@@ -15,7 +15,11 @@ public class RadioButton extends WebComponentSelect{
 
 	@Override
 	public ArrayList<String> testAction() {
-		return null;
+		ArrayList<String> strings = new ArrayList<String>();
+		WebComponent wc = options.get(selected);
+		strings.add("WebElement " + wc.toString() + " = driver.findElement(By.xpath(\"" + wc.xpath + "\"));");
+		strings.add(wc.toString() + ".click();");
+		return strings; 
 	}
 	
 	@Override

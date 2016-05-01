@@ -19,6 +19,6 @@ public class Option extends WebComponent {
 
 	@Override
 	public String toString() {
-		return "Option" + id;
+		return "option" + id;
 	}
 }
