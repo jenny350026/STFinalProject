@@ -17,7 +17,7 @@ public class InputGenerator {
 		List<ArrayList<WebComponent>> generatedInputs = new ArrayList<ArrayList<WebComponent>>();
 		Random randomgen = new Random();
 		int choice, length;
-		int round = 15;
+		int round = 11;
 		for(int i = 0; i < round ; ++i){
 			ArrayList<WebComponent> newTest = new ArrayList<WebComponent>();
 			for(WebComponent wc : components){

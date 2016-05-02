@@ -398,6 +398,8 @@ public class FinalProject {
 			buildTree(tree.head, dropDownsForTree, elementsForTree);
 			
 			System.out.println(tree);
+			driver.close();
+			
 			g.generate(tree);
 		}
 
